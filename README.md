@@ -24,44 +24,7 @@ This repo contains code accompanying the paper, . It includes code for running f
 
 ## Usage
 
-### Run an experiment
-
-- Run an experiment, by providing the configuration argument as a json:
-  
-    ``` 
-    python run_experiment --arg "<config_dict>" 
-    ```
-
-    - Training progress is available in `/exp/<exp_name>/`. Checkpoints are available in `/exp/<exp_name>/ckpts/`. Training curves and statistics are available in `/exp/<exp_name>/logs/`.
-    
-    - Logs of the whole process are are saved in `/exp/running.log`.
-
-
-### Configure an experiment
-
-Default experiment configuration is present in `/src/configs.py`. One can refer to `configs.py` to know about all the configuration variables.
-
-1. To setup **No SQS** in an experiment, set the following flags,
-    ```
-    "no_change_perturb_train_s":1,"no_change_perturb_train_q":1,"no_change_perturb_test_s":1,"no_change_perturb_test_q":1,"train_support_query_shift":0,"test_support_query_shift":0
-    ```
-2. To setup **SQS** in an experiment, set the following flags,
-    ```
-    "no_change_perturb_train_s":0,"no_change_perturb_train_q":0,"no_change_perturb_test_s":0,"no_change_perturb_test_q":0,"train_support_query_shift":1,"test_support_query_shift":1
-    ```
-3. To setup **SQS+** in an experiment, set the following flags,
-    ```
-    "no_change_perturb_train_s":1,"no_change_perturb_train_q":1,"no_change_perturb_test_s":0,"no_change_perturb_test_q":0,"train_support_query_shift":0,"test_support_query_shift":1
-    ```
-
-Following is a command to run ProtoNet+AQP on miniImagenet dataset for SQS+ variant.
-```
-python run_experiment.py --arg '{"exp":"EXP_0","image_size":84,"filter_size":64,"model_name":"ProtoNet","backbone":"resnet18","base_lr":0.1,"meta_lr":0.001,"dataset":"mini-imagenet","train_spec_file":"train.json","val_spec_file":"val.json","test_spec_file":"test.json","n_way":5,"n_source":5,"n_target":8,"n_episodes":400,"n_val_tasks":300,"n_epochs":150,"n_way_eval":5,"n_source_eval":5,"n_target_eval":8,"n_tasks_eval":2000,"no_change_perturb_train_s":1,"no_change_perturb_train_q" :1,"no_change_perturb_test_s":0,"no_change_perturb_test_q":0,"train_support_query_shift":0,"test_support_query_shift":1,"use_train_query":1,"use_test_query":0,"gpu":0,"report_ray":0,"use_adv_project":1,"adv_max_iter":4,"adv_lr":22.0,"train_project_task":1,"val_freq":1,"adv_proj_prob":0.25,"adv_rand_conv_prob":2.0}'
-
-```
-
-* To run experiment without **OT** and **AQP** set `use_adv_project` to 0 and `use_transport_mod` to 0.
-* To run experiment with any one of **OT** or **AQP** set corresponding flag `use_adv_project` to 1 or `use_transport_mod` to 1.
+Please refer to [REPRODUCING.md](./REPRODUCING.md)
 
 
 ## Datasets
@@ -107,7 +70,7 @@ Dataset specifications (domain, class, image) used in the experiments are presen
 
 * **Cifar 100, Mini-Imagenet and Tiered-Imagenet**
 
-    Each dataset has `train.json`, `test.json` and `validation.json` files. These files contain the specifications of the domains for train, test, validation phases.
+    Each dataset has `train.json`, `test.json` and `val.json` files. These files contain the specifications of the domains for train, test, validation phases.
 
 * **FEMNIST**
 
